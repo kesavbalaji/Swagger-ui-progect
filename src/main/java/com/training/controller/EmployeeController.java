@@ -54,10 +54,10 @@ public class EmployeeController {
         return principal;
     }
 
-    @GetMapping("/")
-    public Principal message(Principal principal) {
-        return principal;
-    }
+//    @GetMapping("/")
+//    public Principal message(Principal principal) {
+//        return principal;
+//    }
 
 
 
