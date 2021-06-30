@@ -2,21 +2,17 @@ package com.training.controller;
 
 import com.training.model.Employee;
 import com.training.repository.EmployeeRepository;
-import com.training.specifications.UserSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
-import static org.springframework.data.jpa.domain.Specification.*;
-import static com.training.specifications.UserSpecifications.*;
-
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
 
+import static com.training.specifications.UserSpecifications.*;
+import static org.springframework.data.jpa.domain.Specification.where;
+
 @RestController
 //@RequestMapping("/add")
-@EnableOAuth2Sso
 public class EmployeeController {
 
     @Autowired
@@ -24,14 +20,15 @@ public class EmployeeController {
 
     @PostMapping("/createEmployee")
     public Employee createEmployee(@RequestBody Employee employee) {
-
         return employeeRepository.save(employee);
     }
 
     @GetMapping("/getEmployee")
     public List<Employee> getEmployee() {
 
-        return (List<Employee>) employeeRepository.findAll();
+        List<Employee> list = employeeRepository.findAll();
+        System.out.println("Getting data from DB" + list);
+        return list;
     }
 
     @GetMapping("/employee/{firstname}/{department}")
@@ -42,10 +39,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employee/{lastname}")
-    public List<Employee> hasLastName(@PathVariable ("lastname") String lastname){
-
-        System.out.println(lastname);
-
+    public List<Employee> hasLastName(@PathVariable("lastname") String lastname) {
         return employeeRepository.findAll(containsLastName(lastname));
 
     }
@@ -55,10 +49,10 @@ public class EmployeeController {
         return principal;
     }
 
-//    @GetMapping("/")
-//    public Principal message(Principal principal) {
-//        return principal;
-//    }
+    @GetMapping("/helloWorld")
+    public String message() {
+        return "helloWorld";
+    }
 
 
 
